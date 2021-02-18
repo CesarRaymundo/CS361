@@ -1,12 +1,25 @@
 package fa.dfa;
 
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * @author Andrew Gerber, Cesar Raymundo
+ */
 import fa.State;
 
 public class DFA implements DFAInterface {
 
+private Set<DFAState> allStates;
+private Set<Character> alphabet;
+private DFAState startState;
+
+public DFA(){
+	//Creating new linkedhashset for states and alphabet
+	allStates = new LinkedHashSet<DFAState>();
+	alphabet = new LinkedHashSet<Character>();
+}
 	@Override
 	public void addStartState(String name) {
 		// TODO Auto-generated method stub
@@ -15,7 +28,7 @@ public class DFA implements DFAInterface {
 
 	@Override
 	public void addState(String name) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated meth
 		
 	}
 
@@ -45,14 +58,12 @@ public class DFA implements DFAInterface {
 
 	@Override
 	public State getStartState() {
-		// TODO Auto-generated method stub
-		return null;
+		return startState;
 	}
 
 	@Override
 	public Set<Character> getABC() {
-		// TODO Auto-generated method stub
-		return null;
+		return alphabet;
 	}
 
 	@Override
