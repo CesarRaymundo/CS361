@@ -1,5 +1,6 @@
 package fa.dfa;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -11,31 +12,38 @@ import fa.State;
 
 public class DFA implements DFAInterface {
 
-private Set<DFAState> allStates;
-private Set<Character> alphabet;
-private DFAState startState;
+	private LinkedHashSet<DFAState> statesSet; //holds all the states of the DFA
+	private HashSet<Character> alphabet; //includes all letters used
+	private DFAState startState; //starting state
+	private LinkedHashSet<DFAState> finalStates; //holds all final states
+	
 
 public DFA(){
-	//Creating new linkedhashset for states and alphabet
-	allStates = new LinkedHashSet<DFAState>();
-	alphabet = new LinkedHashSet<Character>();
+	//Creating new linkedhashset for stateSet and final state and creating a hashset for alphabet
+	statesSet = new LinkedHashSet<>();
+	finalStates = new LinkedHashSet<>();
+	alphabet = new HashSet<>();
 }
 	@Override
 	public void addStartState(String name) {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override
 	public void addState(String name) {
-		// TODO Auto-generated meth
+		DFAState state = new DFAState(name);
+		//checks to make sure that it is not a startState, stateSet or a finalState
+		if (!(state.equals(startState) && !(finalStates.contains(state)))){ 
+			statesSet.add(state);
+		}
 		
 	}
 
 	@Override
 	public void addFinalState(String name) {
-		// TODO Auto-generated method stub
-		
+		DFAState state = new DFAState(name);
+		statesSet.add(state);
+		finalStates.add(state);
 	}
 
 	@Override
@@ -46,14 +54,12 @@ public DFA(){
 
 	@Override
 	public Set<? extends State> getStates() {
-		// TODO Auto-generated method stub
-		return null;
+		return statesSet;
 	}
 
 	@Override
 	public Set<? extends State> getFinalStates() {
-		// TODO Auto-generated method stub
-		return null;
+		return finalStates;
 	}
 
 	@Override
@@ -74,8 +80,7 @@ public DFA(){
 
 	@Override
 	public State getToState(DFAState from, char onSymb) {
-		// TODO Auto-generated method stub
-		return null;
+		return from.transition(onSymb);
 	}
     
     
