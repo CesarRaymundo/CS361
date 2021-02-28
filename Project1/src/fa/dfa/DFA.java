@@ -1,12 +1,8 @@
 package fa.dfa;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -30,10 +26,7 @@ public DFA(){
 }
 	@Override
 	public void addStartState(String name) {
-		//CHECK
-		DFAState state = new DFAState(name);
-		startState = state;
-		statesSet.add(state);
+	
 	}
 
 	@Override
@@ -55,27 +48,6 @@ public DFA(){
 
 	@Override
 	public void addTransition(String fromState, char onSymb, String toState) {
-		if(!alphabet.contains(onSymb)) {
-			alphabet.add(onSymb);
-		}
-		//TODO
-		/*
-		 *  iterate through the statesSet till i get to the first state then add its trans to the next one
-		 */
-		//really bad way to do this but oh well
-		Iterator<DFAState> toItr = statesSet.iterator();
-		Iterator<DFAState> fromItr = statesSet.iterator();
-		DFAState fromS = fromItr.next();
-		while(fromItr.hasNext() && !fromS.getName().equals(fromState)) {
-			fromS = fromItr.next();
-		}
-
-		DFAState toS = toItr.next();
-		while(toItr.hasNext() && !toS.getName().equals(fromState)) {
-			toS = toItr.next();
-		}
-		
-		fromS.addTransition(onSymb, toS);
 		
 	}
 
@@ -99,65 +71,81 @@ public DFA(){
 		return alphabet;
 	}
 
-	
-	
-	/**
-	 * Simulates a DFA on input s to determine
-	 * whether the DFA accepts s.
-	 * @param s - the input string
-	 * @return true if s in the language of the DFA and false otherwise
-	 */
 	@Override
 	public boolean accepts(String s) {
-		
-		//convert string to array list/ list
-		//char[] chars = s.toCharArray();
-		DFAState current = startState;
-		for(char ch : s.toCharArray()) {
-			if(current.transition(ch) == null)
-			{
-				return false;
-			}
-			current = current.transition(ch);
-		}
-		if(finalStates.contains(current)) {
-			return true;
-		}else {
-			return false;
-		}
-		
-		
-		
-		
-		
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public State getToState(DFAState from, char onSymb) {
 		return from.transition(onSymb);
 	}
-	
-	
+    
 	/**
-	 * Construct the textual representation of the DFA, for example
-	 * A simple two state DFA
-	 * Q = { a b }
-	 * Sigma = { 0 1 }
-	 * delta =
-	 *		0	1	
-	 *	a	a	b	
-	 *	b	a	b	
-	 * q0 = a
-	 * F = { b }
-	 * 
-	 * The order of the states and the alphabet is the order
-	 * in which they were instantiated in the DFA.
-	 * @return String representation of the DFA
+	 * Returns a String in the format with the following order:
+	 * Q = {Whole set of States}
+	 * Sigma = {alphabet}
+	 * Delta = {transitions}
+	 * q0 = {start state}
+	 * F = {final state}a
+	 * return string with specified format
 	 */
 	public String toString() {
-		//TODO
-		return null;
+		String formatedString = "";
+	
+		//printing the whole set of states
+		formatedString += "Q = { ";
+		Object[] statesArray  = statesSet.toArray();
+		for (int i = 0; i < statesArray.length; i++) {
+			formatedString += statesArray[i] + " ";
+		}
+		formatedString += "} \n";
+		
+		//printing alphabet
+		formatedString += "Sigma = { ";
+		Object[] alphabetArray = alphabet.toArray();
+		for (int i = 0; i < alphabetArray.length; i++) {
+			formatedString += alphabetArray[i] + " ";
+		}
+		formatedString += "} \n";
+		
+		//printing delta
+		formatedString += "delta =  \n\t";
+		//for every character in alphabet
+		for (int i = 0; i < alphabetArray.length; i++) { 
+			formatedString += alphabetArray[i] + " ";
+			
+		}
+		formatedString += "\n\t";
+		
+		for (int j = 0; j < statesArray.length; j++) { //for every state
+			formatedString += statesArray[j] + "\t";
+			for (int i = 0; i < alphabetArray.length; i++) {
+				//adds the resulting state of the transition to the output string
+				formatedString += getToState((DFAState)statesArray[j], (Character)alphabetArray[i]); 
+				formatedString += " ";
+			}
+			//get transition given state and character
+			
+			formatedString += "\n\t"; //go onto next state
+		}
+		formatedString += "\n";
+		
+		//printing start state
+		formatedString += "q0 = " + startState + "\n";
+		
+		//printing final state
+		formatedString += "F = { ";
+		Object[] finalArray = finalStates.toArray();
+		for (int i = 0; i < finalArray.length; i++) {
+			formatedString += finalArray[i] + " ";
+		}
+		formatedString += "} \n";
+		
+		
+		
+		return formatedString;
 	}
-    
     
 }
