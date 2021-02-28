@@ -48,7 +48,6 @@ public DFA(){
 
 	@Override
 	public void addTransition(String fromState, char onSymb, String toState) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -83,5 +82,70 @@ public DFA(){
 		return from.transition(onSymb);
 	}
     
+	/**
+	 * Returns a String in the format with the following order:
+	 * Q = {Whole set of States}
+	 * Sigma = {alphabet}
+	 * Delta = {transitions}
+	 * q0 = {start state}
+	 * F = {final state}a
+	 * return string with specified format
+	 */
+	public String toString() {
+		String formatedString = "";
+	
+		//printing the whole set of states
+		formatedString += "Q = { ";
+		Object[] statesArray  = statesSet.toArray();
+		for (int i = 0; i < statesArray.length; i++) {
+			formatedString += statesArray[i] + " ";
+		}
+		formatedString += "} \n";
+		
+		//printing alphabet
+		formatedString += "Sigma = { ";
+		Object[] alphabetArray = alphabet.toArray();
+		for (int i = 0; i < alphabetArray.length; i++) {
+			formatedString += alphabetArray[i] + " ";
+		}
+		formatedString += "} \n";
+		
+		//printing delta
+		formatedString += "delta =  \n\t";
+		//for every character in alphabet
+		for (int i = 0; i < alphabetArray.length; i++) { 
+			formatedString += alphabetArray[i] + " ";
+			
+		}
+		formatedString += "\n\t";
+		
+		for (int j = 0; j < statesArray.length; j++) { //for every state
+			formatedString += statesArray[j] + "\t";
+			for (int i = 0; i < alphabetArray.length; i++) {
+				//adds the resulting state of the transition to the output string
+				formatedString += getToState((DFAState)statesArray[j], (Character)alphabetArray[i]); 
+				formatedString += " ";
+			}
+			//get transition given state and character
+			
+			formatedString += "\n\t"; //go onto next state
+		}
+		formatedString += "\n";
+		
+		//printing start state
+		formatedString += "q0 = " + startState + "\n";
+		
+		//printing final state
+		formatedString += "F = { ";
+		Object[] finalArray = finalStates.toArray();
+		for (int i = 0; i < finalArray.length; i++) {
+			formatedString += finalArray[i] + " ";
+		}
+		formatedString += "} \n";
+		
+		
+		
+		return formatedString;
+	}
     
 }
