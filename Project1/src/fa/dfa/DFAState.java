@@ -35,11 +35,14 @@ public class DFAState extends State{
 	 * @return - returns the state that is reached by onSymb, it 
 	 * will return null if there is no valid transition with the given character
 	 */
-	public State transition(char onSymb) {
+	public DFAState transition(char onSymb) {
 		if(transitionMap.containsKey(onSymb)) {
 			return transitionMap.get(onSymb);
 		}
 		return null;
+	}
+	public String getNameDFA() {
+		return this.name;
 	}
 	
 	/**

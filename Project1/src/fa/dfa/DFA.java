@@ -1,8 +1,12 @@
 package fa.dfa;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -26,7 +30,10 @@ public DFA(){
 }
 	@Override
 	public void addStartState(String name) {
-	
+		//CHECK
+		DFAState state = new DFAState(name);
+		startState = state;
+		statesSet.add(state);
 	}
 
 	@Override
@@ -48,6 +55,35 @@ public DFA(){
 
 	@Override
 	public void addTransition(String fromState, char onSymb, String toState) {
+		if(!alphabet.contains(onSymb)) {
+			alphabet.add(onSymb);
+		}
+		//TODO
+		/*
+		 *  iterate through the statesSet till i get to the first state then add its trans to the next one
+		 */
+		//really bad way to do this but oh well
+		Iterator<DFAState> toItr = statesSet.iterator();
+		Iterator<DFAState> fromItr = statesSet.iterator();
+		DFAState fromS = fromItr.next();
+		while(fromItr.hasNext() 
+				&& !fromS.getNameDFA().equals(fromState)) {
+			fromS = fromItr.next();
+		}
+		
+//		while(fromItr.toString().equals(fromState)) {
+//				fromS = fromItr.next();
+//			}
+//		}
+
+
+		DFAState toS = toItr.next();
+		while(toItr.hasNext() 
+				&& !toS.getNameDFA().equals(toState)) {
+			toS = toItr.next();
+		}
+		
+		fromS.addTransition(onSymb, toS);
 		
 	}
 
@@ -71,34 +107,73 @@ public DFA(){
 		return alphabet;
 	}
 
+	
+	
+	/**
+	 * Simulates a DFA on input s to determine
+	 * whether the DFA accepts s.
+	 * @param s - the input string
+	 * @return true if s in the language of the DFA and false otherwise
+	 */
 	@Override
 	public boolean accepts(String s) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		//convert string to array list/ list
+		//char[] chars = s.toCharArray();
+		DFAState current = startState;
+		for(char ch : s.toCharArray()) {
+			if(current.transition(ch) == null)
+			{
+				return false;
+			}
+			current = current.transition(ch);
+		}
+		if(finalStates.contains(current)) {
+			return true;
+		}else {
+			return false;
+		}
+		
+		
+		
+		
+		
 	}
 
 	@Override
 	public State getToState(DFAState from, char onSymb) {
 		return from.transition(onSymb);
 	}
-    
+	
+	
 	/**
-	 * Returns a String in the format with the following order:
-	 * Q = {Whole set of States}
-	 * Sigma = {alphabet}
-	 * Delta = {transitions}
-	 * q0 = {start state}
-	 * F = {final state}a
-	 * return string with specified format
+	 * Construct the textual representation of the DFA, for example
+	 * A simple two state DFA
+	 * Q = { a b }
+	 * Sigma = { 0 1 }
+	 * delta =
+	 *		0	1	
+	 *	a	a	b	
+	 *	b	a	b	
+	 * q0 = a
+	 * F = { b }
+	 * 
+	 * The order of the states and the alphabet is the order
+	 * in which they were instantiated in the DFA.
+	 * @return String representation of the DFA
 	 */
 	public String toString() {
 		String formatedString = "";
-	
+		
 		//printing the whole set of states
 		formatedString += "Q = { ";
 		Object[] statesArray  = statesSet.toArray();
-		for (int i = 0; i < statesArray.length; i++) {
-			formatedString += statesArray[i] + " ";
+		Iterator<DFAState> its = statesSet.iterator();
+//		for (int i = 0; i < statesArray.length; i++) {
+//			formatedString += statesArray[i] + " ";
+//		}
+		while(its.hasNext()) {
+			formatedString += its.next().getNameDFA() + " ";
 		}
 		formatedString += "} \n";
 		
@@ -133,19 +208,26 @@ public DFA(){
 		formatedString += "\n";
 		
 		//printing start state
-		formatedString += "q0 = " + startState + "\n";
+		formatedString += "q0 = " + startState.getNameDFA() + "\n";
 		
 		//printing final state
 		formatedString += "F = { ";
-		Object[] finalArray = finalStates.toArray();
-		for (int i = 0; i < finalArray.length; i++) {
-			formatedString += finalArray[i] + " ";
+//		Object[] finalArray = finalStates.toArray();
+//		for (int i = 0; i < finalArray.length; i++) {
+//			formatedString += finalArray[i] + " ";
+//		}
+		
+		Iterator<DFAState> itf = finalStates.iterator();
+		while(itf.hasNext()) {
+			formatedString += itf.next().getNameDFA() + " ";
 		}
+		
 		formatedString += "} \n";
 		
 		
 		
 		return formatedString;
 	}
+    
     
 }
