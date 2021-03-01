@@ -3,6 +3,13 @@ import java.util.HashMap;
 
 import fa.State;
 
+
+/**
+ * This class implements a DFAState, which holds each transition for a state, as well as each
+ * DFAState's name.
+ * @author Andrew Gerber & Cesar Raymundo
+ *
+ */
 public class DFAState extends State{
 	
 	private String name;
