@@ -141,7 +141,7 @@ public DFA(){
 	}
 
 	@Override
-	public State getToState(DFAState from, char onSymb) {
+	public DFAState getToState(DFAState from, char onSymb) {
 		return from.transition(onSymb);
 	}
 	
@@ -185,26 +185,46 @@ public DFA(){
 		}
 		formatedString += "} \n";
 		
+		
+		
+		
 		//printing delta
-		formatedString += "delta =  \n\t";
+		Iterator<DFAState> itDS = statesSet.iterator();	
+		//Iterator<Character> itDA = alphabet.iterator();	
+		formatedString += "delta =  \n\t\t";
 		//for every character in alphabet
 		for (int i = 0; i < alphabetArray.length; i++) { 
-			formatedString += alphabetArray[i] + " ";
+			formatedString += alphabetArray[i] + " \t";
 			
 		}
 		formatedString += "\n\t";
 		
+		
 		for (int j = 0; j < statesArray.length; j++) { //for every state
-			formatedString += statesArray[j] + "\t";
+			formatedString += ((DFAState)statesArray[j]).getNameDFA() + "\t";
 			for (int i = 0; i < alphabetArray.length; i++) {
 				//adds the resulting state of the transition to the output string
-				formatedString += getToState((DFAState)statesArray[j], (Character)alphabetArray[i]); 
-				formatedString += " ";
+				formatedString += getToState((DFAState)statesArray[j], (Character)alphabetArray[i]).getNameDFA(); 
+				formatedString += " \t";
 			}
+
+//		while(itDS.hasNext()) {
+//			formatedString += itDS.next().getNameDFA() + "\t";
+//			while(itDA.hasNext()) {
+//				formatedString += getToState(itDS.next(),itDA.next()); 
+//				formatedString += " ";
+//			}
+//		}
 			//get transition given state and character
 			
 			formatedString += "\n\t"; //go onto next state
 		}
+		
+		
+		
+		
+		
+		
 		formatedString += "\n";
 		
 		//printing start state
