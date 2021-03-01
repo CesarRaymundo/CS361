@@ -22,8 +22,7 @@ To run this program, type one of the following:
 
 ## Discussion
 
-Overall, we did not struggle much with this project. The project was pretty straight foward with it's code 
-but an area where we did struggle was implmenting (***insert method here***)
+Overall, we did not struggle much with this project. The project was pretty straightforward with its code but an area where we did struggle was implementing three methods: accepts, addTransition and toString. For all three is issues stemmed from the same problem, that we needed a way to access the DFAStates in the linkedhashset, we used an iterator with hasNext/Next and casting from a generic Object array to get around these issues. The other problem we had was that in the toString it would always print the "state" name which was null rather than the DFAState name which is what we needed i.e abc.
 
 ## Testing
 
