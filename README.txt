@@ -1,6 +1,6 @@
 # Project 1: DFA Machine
 
-* Author(s): Cesar Raymundo & Andrew Gerber
+* Author(s): Cesar Raymundo(Section 3) & Andrew Gerber(Section 001)
 * Class: CS361 
 * Semester: Spring 2021
 
