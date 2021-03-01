@@ -62,7 +62,7 @@ public DFA(){
 		/*
 		 *  iterate through the statesSet till i get to the first state then add its trans to the next one
 		 */
-		//really bad way to do this but oh well
+
 		Iterator<DFAState> toItr = statesSet.iterator();
 		Iterator<DFAState> fromItr = statesSet.iterator();
 		DFAState fromS = fromItr.next();
@@ -70,12 +70,6 @@ public DFA(){
 				&& !fromS.getNameDFA().equals(fromState)) {
 			fromS = fromItr.next();
 		}
-		
-//		while(fromItr.toString().equals(fromState)) {
-//				fromS = fromItr.next();
-//			}
-//		}
-
 
 		DFAState toS = toItr.next();
 		while(toItr.hasNext() 
@@ -169,9 +163,7 @@ public DFA(){
 		formatedString += "Q = { ";
 		Object[] statesArray  = statesSet.toArray();
 		Iterator<DFAState> its = statesSet.iterator();
-//		for (int i = 0; i < statesArray.length; i++) {
-//			formatedString += statesArray[i] + " ";
-//		}
+
 		while(its.hasNext()) {
 			formatedString += its.next().getNameDFA() + " ";
 		}
@@ -189,8 +181,6 @@ public DFA(){
 		
 		
 		//printing delta
-		Iterator<DFAState> itDS = statesSet.iterator();	
-		//Iterator<Character> itDA = alphabet.iterator();	
 		formatedString += "delta =  \n\t\t";
 		//for every character in alphabet
 		for (int i = 0; i < alphabetArray.length; i++) { 
@@ -207,14 +197,8 @@ public DFA(){
 				formatedString += getToState((DFAState)statesArray[j], (Character)alphabetArray[i]).getNameDFA(); 
 				formatedString += " \t";
 			}
-
-//		while(itDS.hasNext()) {
-//			formatedString += itDS.next().getNameDFA() + "\t";
-//			while(itDA.hasNext()) {
-//				formatedString += getToState(itDS.next(),itDA.next()); 
-//				formatedString += " ";
-//			}
-//		}
+			
+			
 			//get transition given state and character
 			
 			formatedString += "\n\t"; //go onto next state
@@ -232,10 +216,7 @@ public DFA(){
 		
 		//printing final state
 		formatedString += "F = { ";
-//		Object[] finalArray = finalStates.toArray();
-//		for (int i = 0; i < finalArray.length; i++) {
-//			formatedString += finalArray[i] + " ";
-//		}
+
 		
 		Iterator<DFAState> itf = finalStates.iterator();
 		while(itf.hasNext()) {
